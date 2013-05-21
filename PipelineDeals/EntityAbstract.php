@@ -46,7 +46,11 @@ abstract class PipelineDeals_EntityAbstract {
         return null;
     }
 
-    abstract public function loadFromEntry($entry_data);
+    public function loadFromEntry($entry_data)
+    {
+        $this->id = $entry_data['id'];
+        $this->data = $entry_data;
+    }
 
     abstract public function load();
 

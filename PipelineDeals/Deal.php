@@ -16,11 +16,4 @@ class PipelineDeals_Deal extends PipelineDeals_EntityAbstract
         $this->data = $this->pdc->executeRequest("deals/{$this->id}", 'get');
     }
 
-    public function loadFromEntry($entry_data)
-    {
-        $this->id = $entry_data['id'];
-        $this->data = $entry_data;
-    }
-
-
 }
