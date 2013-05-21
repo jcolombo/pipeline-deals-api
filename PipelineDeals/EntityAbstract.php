@@ -1,6 +1,7 @@
 <?php
 namespace PipelineDeals\EntityAbstract;
 
+use PipelineDeals\BaseAbstract\PipelineDeals_BaseAbstract;
 use PipelineDeals\Connection\PipelineDeals_Connection;
 
 /**
@@ -8,10 +9,9 @@ use PipelineDeals\Connection\PipelineDeals_Connection;
  *
  * @author Joel Colombo
  */
-abstract class PipelineDeals_EntityAbstract {
+abstract class PipelineDeals_EntityAbstract extends PipelineDeals_BaseAbstract {
 
     protected $id = null;
-    protected $pdc = null;
     protected $data = null;
 
     public function __construct($id = null, PipelineDeals_Connection $pdc = null)

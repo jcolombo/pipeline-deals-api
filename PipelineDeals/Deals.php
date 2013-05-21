@@ -12,11 +12,6 @@ use PipelineDeals\Deal\PipelineDeals_Deal;
 class PipelineDeals_Deals extends PipelineDeals_RequestAbstract
 {
     protected $hydration_entity = 'PipelineDeals\Deal\PipelineDeals_Deal';
-
-    public function find()
-    {
-        $this->hydrate($this->pdc->executeRequest('deals', 'get', $this->filters), $this->hydration_entity);
-    }
-
+    protected $resource = 'deals';
 }
 

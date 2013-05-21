@@ -14,7 +14,7 @@ class PipelineDeals_Connection {
     protected $connection_url = null;
     protected $cookie_jar = null;
 
-    public function executeRequest($resource, $method='get', $params=null, $data=null)
+    public function executeRequest($resource, $method='get', $params=null, $attribs=null, $data=null)
     {
         $method = strtolower($method);
 
@@ -29,6 +29,9 @@ class PipelineDeals_Connection {
                     $param_string .= "&{$k}={$v}";
                 }
             }
+        }
+        if (!is_null($attribs) && is_array($attribs) && count($attribs)>0) {
+            $param_string .= "&attrs=".implode(',', $attribs);
         }
 
         $url = $this->connection_url.$resource.'.json'.$param_string;
