@@ -90,6 +90,42 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
     }
 
     /*
+     * Manually set a root level filter for the query
+     */
+    public function setFilter($key, $value)
+    {
+        $this->filters[$key] = $value;
+    }
+
+    /*
+     * Clear an already set filter entry
+     */
+    public function removeFilter($key)
+    {
+        if(isset($this->filters[$key])) {
+            unset($this->filters[$key]);
+        }
+    }
+
+    /*
+     * Check if a filter is set.
+     *
+     * @param $key The filter key to check for
+     * @param $return_value If set to true, returns the actual filter value instead of a boolean
+     * @param $not_empty_required If true, the filter value must not be "empty" (The integer 0 is considered valid)
+     */
+    public function hasFilter($key, $return_value=false, $not_empty_required=false)
+    {
+        if (isset($this->filters[$key])) {
+            if (!$not_empty_required || ($not_empty_required && $this->filters[$key]!='' && !is_null($this->filters[$key]))) {
+                return ($return_value)?$this->filters[$key]:true;
+            }
+            return null;
+        }
+        return null;
+    }
+
+    /*
      * Execute the search and populate the entries property with instances of the proper entity object
      */
     public function find()

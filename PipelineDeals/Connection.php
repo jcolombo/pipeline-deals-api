@@ -24,7 +24,7 @@ class PipelineDeals_Connection {
      * @param $params An associative array of URL parameters for the request. Includes page, per_page, conditions, etc
      * @param $attribs An array of attributes that should be returned for the request or entities
      * @param $data An associative array of values to be "sent" to the request in the post/put body (pushing data to the system)
-     * @param $return_raw If set to true returns the raw response from the request, by default it is parsed from JSON to PHP
+     * @param $return_raw If set to true returns the raw response from the request (including headers), by default it is parsed from JSON to PHP
      */
     public function executeRequest($resource, $method='get', $params=null, $attribs=null, $data=null, $return_raw=false)
     {
@@ -58,12 +58,20 @@ class PipelineDeals_Connection {
         curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_jar);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
 
         if ($method == "post" OR $method == "put") {
-                if ($method == "post") { curl_setopt($ch, CURLOPT_POST, 1); }
-                else if ($method == "put") { curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT"); }
-                if (!is_array($data)) { $data = array(); }
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            if (!is_array($data)) { $data = array(); }
+            $json_string = json_encode($data);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($json_string))
+            );
+            if ($method == "post") { curl_setopt($ch, CURLOPT_POST, 1); }
+            else if ($method == "put") { curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT"); }
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_string);
         }
         if ($method == "delete") { curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE"); }
 
@@ -74,12 +82,55 @@ class PipelineDeals_Connection {
             echo "=========================================================</br>\n";
         }
 
-        $res = curl_exec($ch);
+        $run_it = true;
+        $attempts = 0;
+
+        while ($run_it) {
+            $res = curl_exec($ch);
+
+            $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $header_string = substr($res, 0, $header_size);
+            $headers = preg_split("/\r\n|\n|\r/", $header_string);
+            $response_status = $headers[0];
+
+            if (strpos($response_status, '200')) {
+                // Good Request
+                $run_it = false; //Stop looping let it fall through to be processed
+            } elseif(strpos($response_status, '422')) {
+                // Validation error occurred
+                // Handle validation in some way. Assuming a header message comes back with problem?
+                // @todo Need to check the message and handle correctly
+                // var_dump($headers); exit;
+                return false;
+            } elseif(strpos($response_status, '429')) {
+                // Request rate limited exceeded or hitting the wrong url
+                // Error message should come back with the response in the headers.
+                // @todo Need to check the message and handle correctly
+                PipelineDeals_Queue::stall();
+                $attempts++;
+                if ($attempts > 3) {
+                    $run_it = false;
+                    return null;
+                }
+            } elseif(strpos($response_status, '500')) {
+                // An internal error occurred at the API side
+                $attempts++;
+                if ($attempts > 3) {
+                    $run_it = false;
+                    return null;
+                }
+                sleep(2); // Pause for 2 seconds and try again in case API server was just hiccuping
+            }
+        }
+
+        $body = substr($res, $header_size);
+
         curl_close($ch);
+
         if ($return_raw) {
             return $res;
         }
-        return json_decode((string)$res, true);
+        return json_decode((string)$body, true);
     }
 
     /*
