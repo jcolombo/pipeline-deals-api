@@ -98,6 +98,7 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
             die('FIND method cannot be executed without a defined resource and hydration entity.');
         }
         $this->hydrate($this->pdc->executeRequest($this->resource, 'get', $this->filters, $this->getAttributes()), $this->hydration_entity);
+        return $this->entries;
     }
 
     /*
