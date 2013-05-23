@@ -14,7 +14,17 @@ class PipelineDeals_Connection {
     protected $connection_url = null;
     protected $cookie_jar = null;
 
-    public function executeRequest($resource, $method='get', $params=null, $attribs=null, $data=null)
+    /*
+     * Perform an API request and return the response in PHP. Parses the JSON responses automatically.
+     *
+     * @param $resource The resource call to be made after the base API URL... for example "deals" or "deals/12345"
+     * @param $method The required request method for the resource... get, post, put, delete
+     * @param $params An associative array of URL parameters for the request. Includes page, per_page, conditions, etc
+     * @param $attribs An array of attributes that should be returned for the request or entities
+     * @param $data An associative array of values to be "sent" to the request in the post/put body (pushing data to the system)
+     * @param $return_raw If set to true returns the raw response from the request, by default it is parsed from JSON to PHP
+     */
+    public function executeRequest($resource, $method='get', $params=null, $attribs=null, $data=null, $return_raw=false)
     {
         $method = strtolower($method);
 
@@ -62,15 +72,23 @@ class PipelineDeals_Connection {
 
         $res = curl_exec($ch);
         curl_close($ch);
-
+        if ($return_raw) {
+            return $res;
+        }
         return json_decode((string)$res, true);
     }
 
+    /*
+     * Fetch the API key attached to this connection instance
+     */
     public function getApiKey()
     {
         return $this->api_key;
     }
 
+    /*
+     * Set the URL for the connection to the version of the API being used.
+     */
     public function setConnectionUrl($url)
     {
         if (substr($url, -1, 1) != '/') {
@@ -79,15 +97,21 @@ class PipelineDeals_Connection {
         $this->connection_url = $url;
     }
 
+    /*
+     * Set the file for the cookiejar storage. Defaults to the filepath of the library
+     */
     public function setCookieJar($file)
     {
         $this->cookie_jar = $file;
     }
 
     /**
-     * Call this method to get singleton
+     * Create or retrieve a connection instance. If no api_key is passed, the first connection established is returned.
      *
-     * @return UserFactory
+     * @param $api_key The Pipeline Deals API key for this connection. If no key is passed, the first connection is returned
+     * @param $connection_url An optional paramter to an alternative API URL
+     *
+     * @return PipelineDeals_Connection
      */
     public static function getConnection($api_key=null, $connection_url=null) {
         if (is_null($api_key)) {
@@ -106,9 +130,10 @@ class PipelineDeals_Connection {
     }
 
     /**
-     * Private constructor so nobody else can instance it
+     * Private constructor for new connection instances from the singleton getConnection calls
      *
      * @param $api_key The user API key for this connection
+     * @param $connection_url The connection url for the API, if null uses the default /v3/ API
      */
     private function __construct($api_key, $connection_url)
     {

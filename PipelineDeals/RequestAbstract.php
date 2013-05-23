@@ -25,6 +25,9 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
 
     protected $entries = null;
 
+    /*
+     * Create a new instance of search request object
+     */
     public function __construct(PipelineDeals_Connection $pdc = null)
     {
         if (is_null($pdc)) {
@@ -33,16 +36,29 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
         $this->pdc = $pdc;
     }
 
+    /*
+     * How many search results should come back per page. 200 is the default
+     */
     public function setPerPage($per_page)
     {
         $this->filters['per_page'] = $per_page;
     }
 
+    /*
+     * Which page of results should be returned. Page 1 is the default
+     */
     public function setPage($page)
     {
         $this->filters['page'] = $page;
     }
 
+    /*
+     * Use on datetime ranged "conditions" from the documentation.
+     *
+     * @param $key the conditional key to filter on (must be a field of type datetime range)
+     * @param $from the earliest date to include in results. Format YYYY-MM-DD or YYYY-MM-DD HH:MM:SS
+     * @param $to the latest date to include in results. Format YYYY-MM-DD or YYYY-MM-DD HH:MM:SS
+     */
     public function setConditionRange($key, $from=null, $to=null)
     {
         if (!isset($this->filters['conditions']) || !is_array($this->filters['conditions'])) {
@@ -61,6 +77,9 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
         }
     }
 
+    /*
+     * The filter condition and value requirement from the API documentation
+     */
     public function setCondition($key, $value)
     {
         if (!isset($this->filters['conditions']) || !is_array($this->filters['conditions'])) {
@@ -70,6 +89,9 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
         $this->filters['conditions'][$key] = $value;
     }
 
+    /*
+     * Execute the search and populate the entries property with instances of the proper entity object
+     */
     public function find()
     {
         if (is_null($this->resource) || is_null($this->hydration_entity)) {
@@ -78,6 +100,9 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
         $this->hydrate($this->pdc->executeRequest($this->resource, 'get', $this->filters, $this->getAttributes()), $this->hydration_entity);
     }
 
+    /*
+     * Execute the search and only return the total number of results found
+     */
     public function count()
     {
         if (is_null($this->resource) || is_null($this->hydration_entity)) {
@@ -91,6 +116,9 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
         return $count;
     }
 
+    /*
+     * Populate the entries property with the proper entity type objects from the raw search results
+     */
     protected function hydrate($result_set, $entity_type=null)
     {
         if (is_null($result_set)) { return; }

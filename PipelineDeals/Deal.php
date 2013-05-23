@@ -11,6 +11,9 @@ use PipelineDeals\EntityAbstract\PipelineDeals_EntityAbstract;
 class PipelineDeals_Deal extends PipelineDeals_EntityAbstract
 {
 
+    /*
+     * Load a deal from the API based on an ID property in the instance
+     */
     public function load()
     {
         $this->data = $this->pdc->executeRequest("deals/{$this->id}", 'get');

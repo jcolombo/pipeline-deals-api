@@ -14,6 +14,9 @@ abstract class PipelineDeals_EntityAbstract extends PipelineDeals_BaseAbstract {
     protected $id = null;
     protected $data = null;
 
+    /*
+     * Load an entity object if an ID is passed, if not an empty instance of the entity is created
+     */
     public function __construct($id = null, PipelineDeals_Connection $pdc = null)
     {
         $this->id = $id;
@@ -27,6 +30,9 @@ abstract class PipelineDeals_EntityAbstract extends PipelineDeals_BaseAbstract {
         }
     }
 
+    /*
+     * Retrieve a property of the entity. To reference multi-dimensional elements, use a period (.) for depth
+     */
     public function get($data_key)
     {
         $dkeys = explode('.', $data_key);
@@ -46,12 +52,18 @@ abstract class PipelineDeals_EntityAbstract extends PipelineDeals_BaseAbstract {
         return null;
     }
 
+    /*
+     * Takes in the raw entity array returned from the connection and populates the object
+     */
     public function loadFromEntry($entry_data)
     {
         $this->id = $entry_data['id'];
         $this->data = $entry_data;
     }
 
+    /*
+     * Required method for all child objects to understand how to execute the connection request, path, etc
+     */
     abstract public function load();
 
 }
