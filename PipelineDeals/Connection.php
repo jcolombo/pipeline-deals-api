@@ -1,6 +1,8 @@
 <?php
 namespace PipelineDeals\Connection;
 
+use PipelineDeals\Queue\PipelineDeals_Queue;
+
 /**
  * Establish a connection holder for Pipeline Deals API
  *
@@ -26,6 +28,8 @@ class PipelineDeals_Connection {
      */
     public function executeRequest($resource, $method='get', $params=null, $attribs=null, $data=null, $return_raw=false)
     {
+        PipelineDeals_Queue::stall();
+
         $method = strtolower($method);
 
         $param_string = "?api_key={$this->api_key}";

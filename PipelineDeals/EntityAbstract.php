@@ -13,6 +13,7 @@ abstract class PipelineDeals_EntityAbstract extends PipelineDeals_BaseAbstract {
 
     protected $id = null;
     protected $data = null;
+    protected $object_key = null;
 
     /*
      * Load an entity object if an ID is passed, if not an empty instance of the entity is created

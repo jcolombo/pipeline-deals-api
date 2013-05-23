@@ -11,6 +11,8 @@ use PipelineDeals\EntityAbstract\PipelineDeals_EntityAbstract;
 class PipelineDeals_Deal extends PipelineDeals_EntityAbstract
 {
 
+    protected $object_key = 'deal';
+
     /*
      * Load a deal from the API based on an ID property in the instance
      */
