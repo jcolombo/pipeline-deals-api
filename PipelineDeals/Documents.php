@@ -2,7 +2,8 @@
 namespace PipelineDeals\Documents;
 
 use PipelineDeals\RequestAbstract\PipelineDeals_RequestAbstract;
-use PipelineDeals\Deal\PipelineDeals_Document;
+use PipelineDeals\Document\PipelineDeals_Document;
+
 
 /**
  * Document Lookup API Calls
@@ -11,7 +12,7 @@ use PipelineDeals\Deal\PipelineDeals_Document;
  */
 class PipelineDeals_Documents extends PipelineDeals_RequestAbstract
 {
-    protected $hydration_entity = 'PipelineDeals\Deal\PipelineDeals_Document';
+    protected $hydration_entity = 'PipelineDeals\Document\PipelineDeals_Document';
     protected $resource = 'documents';
 }
 

@@ -24,3 +24,5 @@ require_once($object_path.'Notes.php');
 require_once($object_path.'Note.php');
 require_once($object_path.'Documents.php');
 require_once($object_path.'Document.php');
+require_once($object_path.'Comments.php');
+require_once($object_path.'Comment.php');

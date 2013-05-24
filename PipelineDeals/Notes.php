@@ -2,10 +2,10 @@
 namespace PipelineDeals\Notes;
 
 use PipelineDeals\RequestAbstract\PipelineDeals_RequestAbstract;
-use PipelineDeals\Deal\PipelineDeals_Note;
+use PipelineDeals\Note\PipelineDeals_Note;
 
-use PipelineDeals\Deal\PipelineDeals_Company;
-use PipelineDeals\Deal\PipelineDeals_Person;
+use PipelineDeals\Company\PipelineDeals_Company;
+use PipelineDeals\Person\PipelineDeals_Person;
 use PipelineDeals\Deal\PipelineDeals_Deal;
 
 /**
@@ -15,7 +15,7 @@ use PipelineDeals\Deal\PipelineDeals_Deal;
  */
 class PipelineDeals_Notes extends PipelineDeals_RequestAbstract
 {
-    protected $hydration_entity = 'PipelineDeals\Deal\PipelineDeals_Note';
+    protected $hydration_entity = 'PipelineDeals\Note\PipelineDeals_Note';
     protected $resource = 'notes';
 
     public function findByCompany($company_id, $person_id=null, $deal_id=null)

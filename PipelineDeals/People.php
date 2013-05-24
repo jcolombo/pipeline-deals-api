@@ -2,7 +2,7 @@
 namespace PipelineDeals\People;
 
 use PipelineDeals\RequestAbstract\PipelineDeals_RequestAbstract;
-use PipelineDeals\Deal\PipelineDeals_Person;
+use PipelineDeals\Person\PipelineDeals_Person;
 
 /**
  * People Lookup API Calls
@@ -11,7 +11,7 @@ use PipelineDeals\Deal\PipelineDeals_Person;
  */
 class PipelineDeals_People extends PipelineDeals_RequestAbstract
 {
-    protected $hydration_entity = 'PipelineDeals\Deal\PipelineDeals_Person';
+    protected $hydration_entity = 'PipelineDeals\Person\PipelineDeals_Person';
     protected $resource = 'people';
 }
 

@@ -2,7 +2,7 @@
 namespace PipelineDeals\Companies;
 
 use PipelineDeals\RequestAbstract\PipelineDeals_RequestAbstract;
-use PipelineDeals\Deal\PipelineDeals_Company;
+use PipelineDeals\Company\PipelineDeals_Company;
 
 /**
  * Companies Lookup API Calls
@@ -11,7 +11,7 @@ use PipelineDeals\Deal\PipelineDeals_Company;
  */
 class PipelineDeals_Companies extends PipelineDeals_RequestAbstract
 {
-    protected $hydration_entity = 'PipelineDeals\Deal\PipelineDeals_Company';
+    protected $hydration_entity = 'PipelineDeals\Company\PipelineDeals_Company';
     protected $resource = 'companies';
 }
 

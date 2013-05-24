@@ -170,7 +170,7 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
             $this->entries = $result_set['entries'];
         }
         $entries =& $result_set['entries'];
-        foreach ($entries as $i => $data) {
+        foreach ($entries as $data) {
             $id = $data['id'];
             $this->entries[$id] = new $entity_type();
             $this->entries[$id]->loadFromEntry($data);
