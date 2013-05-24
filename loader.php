@@ -22,3 +22,5 @@ require_once($object_path.'People.php');
 require_once($object_path.'Person.php');
 require_once($object_path.'Notes.php');
 require_once($object_path.'Note.php');
+require_once($object_path.'Documents.php');
+require_once($object_path.'Document.php');
