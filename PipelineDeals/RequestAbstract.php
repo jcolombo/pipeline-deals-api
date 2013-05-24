@@ -147,7 +147,7 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
         }
         $e = $this->pdc->executeRequest($this->resource, 'get', $this->filters, array('id'));
         $count = null;
-        if (isset($e['pagination'])) {
+        if (is_array($e) && isset($e['pagination'])) {
             $count = $e['pagination']['total'];
         }
         return $count;
@@ -158,8 +158,11 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
      */
     protected function hydrate($result_set, $entity_type=null)
     {
-        if (is_null($result_set)) { return; }
-        if (isset($result_set['pagination'])) {
+        if (is_null($result_set) || $result_set===false) {
+            $this->entries = null;
+            return;
+        }
+        if (is_array($result_set) && isset($result_set['pagination'])) {
             $this->total_entries = $result_set['pagination']['total'];
             $this->current_per_page = $result_set['pagination']['per_page'];
             $this->current_page = $result_set['pagination']['page'];
