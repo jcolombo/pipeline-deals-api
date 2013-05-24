@@ -26,3 +26,7 @@ require_once($object_path.'Documents.php');
 require_once($object_path.'Document.php');
 require_once($object_path.'Comments.php');
 require_once($object_path.'Comment.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'Account.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'CustomFieldLabel.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'CustomFieldDropdownOption.php');
+

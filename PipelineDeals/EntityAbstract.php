@@ -63,6 +63,17 @@ abstract class PipelineDeals_EntityAbstract extends PipelineDeals_BaseAbstract {
     }
 
     /*
+     * Return a boolean true if there is data in the object
+     */
+    public function hasData()
+    {
+        if (is_null($this->data) || !is_array($this->data) || count($this->data)==0) {
+            return false;
+        }
+        return true;
+    }
+
+    /*
      * Required method for all child objects to understand how to execute the connection request, path, etc
      */
     abstract public function load();

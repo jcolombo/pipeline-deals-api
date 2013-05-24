@@ -22,7 +22,6 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
 
     protected $filters = array();
 
-
     protected $entries = null;
 
     /*
@@ -34,6 +33,17 @@ abstract class PipelineDeals_RequestAbstract extends PipelineDeals_BaseAbstract 
             $pdc = PipelineDeals_Connection::getConnection();
         }
         $this->pdc = $pdc;
+    }
+
+    /*
+     * Return a boolean true if there are entries in the object
+     */
+    public function hasEntries()
+    {
+        if (is_null($this->entries) || !is_array($this->entries) || count($this->entries)==0) {
+            return false;
+        }
+        return true;
     }
 
     /*

@@ -6,6 +6,8 @@ This is a PHP Library for wrapping the PipelineDeals.com API
 
 Include the library loader file into your project.
 
+REQUIRES PHP 5.3.0 or HIGHER as the package uses namespaces.
+
 ```php
 <?php
 
