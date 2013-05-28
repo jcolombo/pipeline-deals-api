@@ -29,4 +29,8 @@ require_once($object_path.'Comment.php');
 require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'Account.php');
 require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'CustomFieldLabel.php');
 require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'CustomFieldDropdownOption.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'NoteCategory.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'PredefinedContactsTag.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'DealStage.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'LeadSource.php');
 
