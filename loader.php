@@ -33,4 +33,7 @@ require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'NoteCategory.php');
 require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'PredefinedContactsTag.php');
 require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'DealStage.php');
 require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'LeadSource.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'LeadStatus.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'EventCategory.php');
+require_once($object_path.'Admin'.DIRECTORY_SEPARATOR.'User.php');
 

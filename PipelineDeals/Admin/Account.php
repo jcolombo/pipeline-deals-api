@@ -7,6 +7,9 @@ use PipelineDeals\Admin\NoteCategory\PipelineDeals_Admin_NoteCategory;
 use PipelineDeals\Admin\PredefinedContactsTag\PipelineDeals_Admin_PredefinedContactsTag;
 use PipelineDeals\Admin\DealStage\PipelineDeals_Admin_DealStage;
 use PipelineDeals\Admin\LeadSource\PipelineDeals_Admin_LeadSource;
+use PipelineDeals\Admin\LeadStatus\PipelineDeals_Admin_LeadStatus;
+use PipelineDeals\Admin\EventCategory\PipelineDeals_Admin_EventCategory;
+use PipelineDeals\Admin\User\PipelineDeals_Admin_User;
 
 /**
  * The loader class to pull in all the Account "Admin" resources
@@ -112,9 +115,30 @@ class PipelineDeals_Admin_Account {
                     $d = new PipelineDeals_Admin_LeadSource($source_data);
                 }
             }
+            if (isset($admin_data['lead_statuses'])) {
+                foreach($admin_data['lead_statuses'] as $status_data) {
+                    $this->lead_statuses[$status_data['id']] = null;
+                    $d =& $this->lead_statuses[$status_data['id']];
+                    $d = new PipelineDeals_Admin_LeadStatus($status_data);
+                }
+            }
+            if (isset($admin_data['event_categories'])) {
+                foreach($admin_data['event_categories'] as $category_data) {
+                    $this->event_categories[$category_data['id']] = null;
+                    $d =& $this->event_categories[$category_data['id']];
+                    $d = new PipelineDeals_Admin_EventCategory($category_data);
+                }
+            }
+            if (isset($admin_data['users'])) {
+                foreach($admin_data['users'] as $user_data) {
+                    $this->users[$user_data['id']] = null;
+                    $d =& $this->users[$user_data['id']];
+                    $d = new PipelineDeals_Admin_User($user_data);
+                }
+            }
 
-            //var_dump($this);
-            var_dump($admin_data);
+            var_dump($this);
+            //var_dump($admin_data);
 
             return true;
         }
